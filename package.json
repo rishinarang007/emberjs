@@ -1,0 +1,17 @@
+{
+  "name": "testProject",
+  "version": "0.0.1",
+  "description": "test popups",
+  "main": "karma.config.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "BSD",
+  "devDependencies": {    
+    "connect": "~2.17.1"
+  }
+}

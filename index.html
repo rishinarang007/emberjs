@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Github Club</title>
+    <link rel='stylesheet' href='stylesheets/bootstrap.min.css' />
+    <link rel='stylesheet' href='stylesheets/bootstrap-theme.min.css' />
+    <link rel='stylesheet' href='stylesheets/overrides.css' />
+  </head>
+  <body>
+    <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        
+    </div>
+     <div class="container" id="gitHubRoot">
+          
+      </div>
+
+    <script type="text/x-handlebars" data-template-name="application">
+      <div class="row">
+
+            <div class="col-md-12" style="margin-top:48px" >
+                 
+                   {{outlet}}                   
+                   
+            </div>
+       </div>      
+    </script>
+
+
+ <script type="text/x-handlebars" data-template-name="index">
+  <h1>Github Namshub</h1>
+                  <hr/>
+      <p>Simeple test 1</p>
+      <ul>
+        {{#each dev in controller}}
+          <li>{{#link-to 'user' dev}}{{dev.name}}{{/link-to}}</li>
+        {{/each}}
+      </ul>
+     
+    </script>
+
+
+    <script type="text/x-handlebars" data-template-name="user">
+     
+     <div class="row">
+    <div class="col-md-3">
+      <div class="well">
+        <p class="text-center">
+          {{#link-to 'user' this.login}}<img {{bind-attr src=avatar_url}} style="width:140px"/>{{/link-to}}
+        </p>
+        <h4>{{#link-to 'user' this}}{{name}}{{/link-to}}</h4>
+        <p>
+          {{company}}<br />
+          {{location}}<br />
+          {{email}}<br />
+        </p>
+        <hr/>
+        <table class="table table-striped">
+          <tr><td>Followers:</td><td>{{followers}}</td></tr>
+          <tr><td>Reopsitories: </td><td>{{public_repos}}</td></tr>
+          <tr><td>Gists: </td><td>{{public_gists}}</td></tr>
+        </table>
+
+         <p>
+            {{#link-to "index"}}Back{{/link-to}}
+        </p>
+      
+      </div>
+    </div>
+     
+  </div>
+     
+    </script>
+
+  </body>
+</html>
+
+<script type="text/javascript" src="javascripts/vendor/jquery-1.10.2.js"></script>
+<script type="text/javascript" src="javascripts/vendor/moment/moment.js"></script>
+<script type="text/javascript" src="javascripts/vendor/bootstrap/bootstrap.min.js"></script>
+<script type="text/javascript" src="javascripts/vendor/ember/handlebars-1.1.2.js"></script>
+<script type="text/javascript" src="javascripts/vendor/ember/ember-1.4.0.js"></script>
+
+<script type="text/javascript">
+
+    var devs = [
+
+      {login:"rishinarang007" , name:"Rishi Narang"},
+      {login:"shanselman", name:"Scott Hanselman"},
+      {login:"tomdale", name:"Tom Dale"},
+      {login:"wycats", name:"Yehuda Katz"}
+    ]
+
+    window.Github = Ember.Application.create({
+
+        rootElement : "#gitHubRoot"
+
+    });    
+
+    Github.IndexRoute = Ember.Route.extend({
+        model: function(){
+          return devs
+        }
+    });
+
+    Github.Router.map(function(){
+
+        this.resource("user", {path:"/users/:login"});
+
+    });
+
+    Github.UserRoute = Ember.Route.extend({
+
+        model:function(params){
+
+            return Ember.$.getJSON("https://api.github.com/users/" + params.login)
+
+        }
+
+    });
+
+
+  
+
+
+
+
+</script>
